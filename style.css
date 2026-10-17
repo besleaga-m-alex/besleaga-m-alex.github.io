@@ -22,20 +22,24 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    /* Adăugăm spațiu de siguranță pe corp pentru a nu lăsa conținutul să intre sub barele fixe */
     padding-top: calc(60px + env(safe-area-inset-top));
     padding-bottom: calc(60px + env(safe-area-inset-bottom));
 }
 
+/* Header-ul acoperă complet camera de sus/notch-ul */
 header {
     position: fixed;
-    top: 0; left: 0; width: 100%;
-    height: calc(60px + env(safe-area-inset-top));
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* padding-top extinde fundalul sub camera frontală fizică */
+    padding-top: env(safe-area-inset-top);
     background-color: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--apple-border);
     z-index: 1000;
-    padding-top: env(safe-area-inset-top);
 }
 
 .header-container {
@@ -49,16 +53,19 @@ header {
 .apple-logo { font-size: 22px; }
 header h1 { font-size: 15px; font-weight: 600; }
 
+/* Footer-ul acoperă complet zona de navigare nativă de jos (Home Indicator) */
 footer {
     position: fixed;
-    bottom: 0; left: 0; width: 100%;
-    height: calc(60px + env(safe-area-inset-bottom));
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* padding-bottom extinde fizic fundalul până la marginea metalică de jos a telefonului */
+    padding-bottom: env(safe-area-inset-bottom);
     background-color: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid var(--apple-border);
     z-index: 1000;
-    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .footer-container {
@@ -89,32 +96,15 @@ main { flex: 1; padding: 16px; }
 }
 
 .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    width: 100%;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; width: 100%;
 }
 
-h2 {
-    font-size: 16px;
-    font-weight: 600;
-    flex: 1; /* Împinge badge-ul spre marginea dreaptă în mod ordonat */
-}
+h2 { font-size: 16px; font-weight: 600; flex: 1; }
 
-/* MODIFICARE RECOMANDATĂ: Controlul textului lung pentru a preveni depășirea marginilor */
 .status-badge {
-    font-size: 11px;
-    padding: 5px 10px;
-    border-radius: 10px;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* Adaugă automat cele trei puncte (...) dacă textul este prea lung */
-    max-width: 160px; /* Lățimea maximă de siguranță pentru telefoanele mobile */
-    text-align: center;
-    flex-shrink: 0; /* Previne turtirea ecusonului */
+    font-size: 11px; padding: 5px 10px; border-radius: 10px; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 160px; text-align: center; flex-shrink: 0;
 }
 
 .status-badge.action-required { background-color: #e8f4ff; color: var(--apple-blue); border: 1px solid #b3d7ff; }

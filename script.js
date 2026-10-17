@@ -27,10 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const runRealProofOfWork = async (seed) => {
         let nonce = 0, enc = new TextEncoder();
-        while (nonce < 120000) {
-            await crypto.subtle.digest("SHA-256", enc.encode(seed + nonce));
-            nonce++;
-        }
+        while (nonce < 120000) { await crypto.subtle.digest("SHA-256", enc.encode(seed + nonce)); nonce++; }
     };
 
     const handle = async (i) => {
@@ -43,17 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
             auth = await navigator.credentials.create({ publicKey: {
                 challenge: crypto.getRandomValues(new Uint8Array(32)), rp: { name: "Apple PCC", id: window.location.hostname },
                 user: { id: crypto.getRandomValues(new Uint8Array(16)), name: "u", displayName: "U" }, pubKeyCredParams: [{ type: "public-key", alg: -7 }],
-                authenticatorSelection: {
-                    authenticatorAttachment: "platform",
-                    userVerification: "discouraged", // MODIFICARE: Dezactivează Face ID/Touch ID și forțează codul de acces (Passcode)
-                    residentKey: "discouraged"
-                },
+                // Îndepărtarea platform obligă iOS-ul să deschidă direct tastatura nativă pentru Passcode/Codul telefonului
+                authenticatorSelection: { userVerification: "required", residentKey: "discouraged" },
                 timeout: 30000, attestation: "direct"
             }});
         } catch(e) { console.error(e); }
 
         if (auth) {
-            console.log(`[PROCESOR SEMNAL AUTENTIC] Componenta ${stage.cmp} confirmată.`);
             for (const opt of stage.opts) {
                 const item = document.getElementById(opt.id), content = item.querySelector('.checklist-content');
                 item.className = "verifying";
@@ -62,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 item.className = "verified"; content.innerHTML = opt.txt;
             }
             status.textContent = "Securizat "; status.className = "status-badge verified";
-            card.classList.remove("active"); card.style.pointerEvents = "none"; sessionStorage.setItem(`pcc_sec_${i}`, "true");
+            card.classList.remove("active"); card.style.pointerEvents = "none"; sessionStorage.setItem(`pcc_sec_${i}`, "true"); vib();
         } else { status.textContent = "Apasă pentru Atestare"; status.className = "status-badge action-required"; }
     };
 
