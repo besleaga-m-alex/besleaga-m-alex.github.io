@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Apple PCC - Universal Free Audit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <span class="apple-logo"></span>
+            <h1>Apple Private Cloud Compute (PCC) Hub</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            
+            <!-- COMPONENTA 1 -->
+            <div class="card active" id="section-1">
+                <div class="card-header">
+                    <h2>1. Hardware & PCC Core</h2>
+                    <div id="status-1" class="status-badge action-required">Apasă pentru Atestare</div>
+                </div>
+                <ul class="checklist">
+                    <li id="opt-1-1" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Hardware-backed cryptographic identity:</strong> Keys generated during manufacturing fused into the silicon.</div></li>
+                    <li id="opt-1-2" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Secure and Measured Boot:</strong> Validates all code running on the device via an immutable Boot ROM.</div></li>
+                    <li id="opt-1-3" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Stateless computation:</strong> Personal user data is destroyed immediately after processing.</div></li>
+                </ul>
+            </div>
+
+            <!-- COMPONENTA 2 -->
+            <div class="card active" id="section-2">
+                <div class="card-header">
+                    <h2>2. Sistem de operare (OS Hardening)</h2>
+                    <div id="status-2" class="status-badge action-required">Apasă pentru Atestare</div>
+                </div>
+                <ul class="checklist">
+                    <li id="opt-2-1" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Hardened Darwin Derivative:</strong> Custom, stripped-down OS based on macOS/iOS.</div></li>
+                    <li id="opt-2-2" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Immutable Root Filesystem:</strong> OS files sealed in a cryptographically signed system volume.</div></li>
+                    <li id="opt-2-3" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Cryptographically erased data volumes:</strong> Local storage volumes wiped securely on reboot.</div></li>
+                </ul>
+            </div>
+
+            <!-- COMPONENTA 3 -->
+            <div class="card active" id="section-3">
+                <div class="card-header">
+                    <h2>3. Internet & Network Security</h2>
+                    <div id="status-3" class="status-badge action-required">Apasă pentru Atestare</div>
+                </div>
+                <ul class="checklist">
+                    <li id="opt-3-1" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Oblivious HTTP (OHTTP) Relay:</strong> User IP addresses completely masked by a third-party relay.</div></li>
+                    <li id="opt-3-2" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Denali Firewall Agent:</strong> Restricts communication exclusively via strict mTLS.</div></li>
+                    <li id="opt-3-3" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>RSA Blind Signatures:</strong> Prevents the infrastructure from profiling device routing.</div></li>
+                </ul>
+            </div>
+
+            <!-- COMPONENTA 4 -->
+            <div class="card active" id="section-4">
+                <div class="card-header">
+                    <h2>4. Software & Execution Safety</h2>
+                    <div id="status-4" class="status-badge action-required">Apasă pentru Atestare</div>
+                </div>
+                <ul class="checklist">
+                    <li id="opt-4-1" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Swift on Server Memory Safety:</strong> Critical applications written in Swift to eliminate memory corruption.</div></li>
+                    <li id="opt-4-2" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>No privileged runtime access:</strong> All remote shell debugging and developer tools are removed.</div></li>
+                </ul>
+            </div>
+
+            <!-- COMPONENTA 5 -->
+            <div class="card active" id="section-5">
+                <div class="card-header">
+                    <h2>5. Software App & Workloads</h2>
+                    <div id="status-5" class="status-badge action-required">Apasă pentru Atestare</div>
+                </div>
+                <ul class="checklist">
+                    <li id="opt-5-1" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Encapsulated Cryptexes:</strong> Workload binaries distributed as signed cryptographic extensions.</div></li>
+                    <li id="opt-5-2" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Sandboxed AI Execution:</strong> AI inference operations heavily sandboxed with no escalation vectors.</div></li>
+                </ul>
+            </div>
+
+            <!-- COMPONENTA 6 -->
+            <div class="card active" id="section-6">
+                <div class="card-header">
+                    <h2>6. Website & Verifiable Transparency</h2>
+                    <div id="status-6" class="status-badge action-required">Apasă pentru Atestare</div>
+                </div>
+                <ul class="checklist">
+                    <li id="opt-6-1" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Tamper-Evident Transparency Log:</strong> Software image hashes recorded publicly in append-only ledgers.</div></li>
+                    <li id="opt-6-2" class="pending"><div class="status-indicator"></div><div class="checklist-content"><strong>Virtual Research Environment (VRE):</strong> Provides open tools to boot virtual PCC nodes.</div></li>
+                </ul>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2026 Apple Private Cloud Compute Security Standard Verification.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
