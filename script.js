@@ -43,7 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
             auth = await navigator.credentials.create({ publicKey: {
                 challenge: crypto.getRandomValues(new Uint8Array(32)), rp: { name: "Apple PCC", id: window.location.hostname },
                 user: { id: crypto.getRandomValues(new Uint8Array(16)), name: "u", displayName: "U" }, pubKeyCredParams: [{ type: "public-key", alg: -7 }],
-                authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required", residentKey: "discouraged" },
+                authenticatorSelection: {
+                    authenticatorAttachment: "platform",
+                    userVerification: "discouraged", // MODIFICARE: Dezactivează Face ID/Touch ID și forțează codul de acces (Passcode)
+                    residentKey: "discouraged"
+                },
                 timeout: 30000, attestation: "direct"
             }});
         } catch(e) { console.error(e); }
