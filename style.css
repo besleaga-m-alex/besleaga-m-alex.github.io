@@ -22,24 +22,20 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    /* Adăugăm spațiu de siguranță pe corp pentru a nu lăsa conținutul să intre sub barele fixe */
     padding-top: calc(60px + env(safe-area-inset-top));
     padding-bottom: calc(60px + env(safe-area-inset-bottom));
 }
 
-/* Header-ul acoperă complet camera de sus/notch-ul */
+/* Modificare: Header complet ALB SOLID extins 100% peste camera frontală */
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    /* padding-top extinde fundalul sub camera frontală fizică */
     padding-top: env(safe-area-inset-top);
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background-color: #ffffff !important; /* Forțează fundal alb opac non-translucid */
     border-bottom: 1px solid var(--apple-border);
-    z-index: 1000;
+    z-index: 99999; /* Se asigură că stă deasupra camerei software */
 }
 
 .header-container {
@@ -53,19 +49,16 @@ header {
 .apple-logo { font-size: 22px; }
 header h1 { font-size: 15px; font-weight: 600; }
 
-/* Footer-ul acoperă complet zona de navigare nativă de jos (Home Indicator) */
+/* Modificare: Footer complet ALB SOLID extins 100% peste zona de navigare de jos */
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    /* padding-bottom extinde fizic fundalul până la marginea metalică de jos a telefonului */
     padding-bottom: env(safe-area-inset-bottom);
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background-color: #ffffff !important; /* Forțează fundal alb opac non-translucid */
     border-top: 1px solid var(--apple-border);
-    z-index: 1000;
+    z-index: 99999;
 }
 
 .footer-container {
@@ -101,10 +94,11 @@ main { flex: 1; padding: 16px; }
 
 h2 { font-size: 16px; font-weight: 600; flex: 1; }
 
+/* Secțiunea galbenă optimizată cu puncte suspensive pentru a nu depăși stânga/dreapta */
 .status-badge {
     font-size: 11px; padding: 5px 10px; border-radius: 10px; font-weight: 500;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    max-width: 160px; text-align: center; flex-shrink: 0;
+    max-width: 150px; text-align: center; flex-shrink: 0;
 }
 
 .status-badge.action-required { background-color: #e8f4ff; color: var(--apple-blue); border: 1px solid #b3d7ff; }
