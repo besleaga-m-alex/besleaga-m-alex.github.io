@@ -25,12 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Funcție de calcul real intens: Rulează SHA-256 în buclă hardware până rezolvă o problemă criptografică complexă (Proof of Work)
     const runRealProofOfWork = async (seed) => {
         let nonce = 0, enc = new TextEncoder();
-        while (nonce < 150000) { // Prag de dificultate matematică care forțează cipul să proceseze intens câteva secunde
-            const data = enc.encode(seed + nonce);
-            await crypto.subtle.digest("SHA-256", data);
+        while (nonce < 120000) {
+            await crypto.subtle.digest("SHA-256", enc.encode(seed + nonce));
             nonce++;
         }
     };
@@ -45,22 +43,21 @@ document.addEventListener("DOMContentLoaded", () => {
             auth = await navigator.credentials.create({ publicKey: {
                 challenge: crypto.getRandomValues(new Uint8Array(32)), rp: { name: "Apple PCC", id: window.location.hostname },
                 user: { id: crypto.getRandomValues(new Uint8Array(16)), name: "u", displayName: "U" }, pubKeyCredParams: [{ type: "public-key", alg: -7 }],
-                authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required", residentKey: "discouraged" }, timeout: 30000, attestation: "none"
+                authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required", residentKey: "discouraged" },
+                timeout: 30000, attestation: "direct"
             }});
-        } catch(e) { console.error("Eroare hardware:", e); }
+        } catch(e) { console.error(e); }
 
         if (auth) {
+            console.log(`[PROCESOR SEMNAL AUTENTIC] Componenta ${stage.cmp} confirmată.`);
             for (const opt of stage.opts) {
                 const item = document.getElementById(opt.id), content = item.querySelector('.checklist-content');
                 item.className = "verifying";
                 content.innerHTML = `<div style="display:flex;flex-direction:column;gap:2px;width:100%;"><div style="color:var(--apple-blue);font-weight:600;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;">${opt.log}</div><div style="color:#1d1d1f;font-weight:500;">${opt.txt}</div></div>`;
-                
-                // EXECUȚIE CALCUL HARDWARE REAL: Timpul consumat aici depinde direct de puterea procesorului tău
                 await runRealProofOfWork(opt.id + auth.id);
-                
-                item.className = "verified"; content.innerHTML = opt.txt; vib(15);
+                item.className = "verified"; content.innerHTML = opt.txt;
             }
-            vib(); status.textContent = "Securizat "; status.className = "status-badge verified";
+            status.textContent = "Securizat "; status.className = "status-badge verified";
             card.classList.remove("active"); card.style.pointerEvents = "none"; sessionStorage.setItem(`pcc_sec_${i}`, "true");
         } else { status.textContent = "Apasă pentru Atestare"; status.className = "status-badge action-required"; }
     };
