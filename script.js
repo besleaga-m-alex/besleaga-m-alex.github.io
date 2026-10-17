@@ -37,23 +37,26 @@ document.addEventListener("DOMContentLoaded", () => {
         let auth = null;
 
         try {
-            // Forțăm o interogare cu ID invalid în mod intenționat. iOS va anula instant Face ID și va deschide Passcode.
-            auth = await navigator.credentials.get({ publicKey: {
-                challenge: crypto.getRandomValues(new Uint8Array(32)), rpId: window.location.hostname,
-                allowCredentials: [{ type: "public-key", id: new Uint8Array([1,2,3,4]) }], // ID fictiv care scurtcircuitează biometria facială
-                userVerification: "required", timeout: 15000
+            // Folosim create + platform pentru a opri deschiderea meniului extern de coduri QR sau chei USB
+            auth = await navigator.credentials.create({ publicKey: {
+                challenge: crypto.getRandomValues(new Uint8Array(32)), rp: { name: "Apple PCC", id: window.location.hostname },
+                user: { id: crypto.getRandomValues(new Uint8Array(16)), name: "u", displayName: "U" }, pubKeyCredParams: [{ type: "public-key", alg: -7 }],
+                authenticatorSelection: {
+                    authenticatorAttachment: "platform", // Forțează utilizarea exclusivă a cipului intern de pe iPhone/Mac
+                    userVerification: "required",
+                    residentKey: "discouraged" // Împiedică stocarea permanentă sau afișarea managerelor de parole
+                },
+                timeout: 30000, attestation: "none"
             }});
-        } catch(e) {
-            // Interceptăm fallback-ul haptic trimis de sistem când utilizatorul introduce corect PIN-ul de ecran
-            if(e.name === "NotAllowedError" || e.name === "SecurityError") auth = true;
-        }
+        } catch(e) { console.error("Eroare hardware:", e); }
 
         if (auth) {
+            console.log(`[PROCESOR SEMNAL AUTENTIC] Componenta ${stage.cmp} confirmată.`);
             for (const opt of stage.opts) {
                 const item = document.getElementById(opt.id), content = item.querySelector('.checklist-content');
                 item.className = "verifying";
                 content.innerHTML = `<div style="display:flex;flex-direction:column;gap:2px;width:100%;"><div style="color:var(--apple-blue);font-weight:600;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;">${opt.log}</div><div style="color:#1d1d1f;font-weight:500;">${opt.txt}</div></div>`;
-                await runRealProofOfWork(opt.id);
+                await runRealProofOfWork(opt.id + auth.id);
                 item.className = "verified"; content.innerHTML = opt.txt;
             }
             status.textContent = "Securizat "; status.className = "status-badge verified";
